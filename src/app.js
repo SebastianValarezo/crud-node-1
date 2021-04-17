@@ -8,7 +8,7 @@ const app = express();
 
 // Env
 
-require("dotenv").config({ path: "variables.env" });
+require("dotenv").config({ path: "../variables.env" });
 
 // Databases Connection
 
