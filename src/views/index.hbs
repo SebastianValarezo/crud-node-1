@@ -1,0 +1,62 @@
+{{> header}}
+
+<nav class="navbar navbar-dark bg-dark mb-4">
+  <div class="container-fluid">
+    <a href="/" class="navbar-brand">Task App</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <div class="card">
+        <div class="card-body">
+          <form action="/add" method="POST">
+            <div class="form-group mb-3">
+              <input type="text" name="title" placeholder="Insert a Title" class="form-control">
+            </div>
+            <div class="form-group mb-3">
+              <textarea name="description" cols="80" placeholder="Description" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Operation</th>
+          </tr>
+        </thead>
+        <tbody>
+         {{#each tasks }}
+           <tr>
+             <td>{{title}}</td>
+             <td>{{description}}</td>
+             <td>
+               {{#if status}}
+               <a href="/status/{{_id}}" class="btn btn-success">
+                Done
+               </a>
+               {{else}}
+                 <a href="/status/{{_id}}" class="btn btn-dark">
+                Done
+               </a>
+               {{/if}}
+              
+               <a href="/delete/{{_id}}" class="btn btn-danger">Delete</a>
+               <a href="/edit/{{id}}" class="btn btn-info">Edit</a>
+             </td>
+           </tr>
+         {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{{> footer}}
