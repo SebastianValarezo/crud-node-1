@@ -6,10 +6,14 @@ const chalk = require("chalk");
 const path = require("path");
 const app = express();
 
+// Env
+
+require("dotenv").config({ path: "variables.env" });
+
 // Databases Connection
 
 mongoose
-  .connect("mongodb://localhost/crud-mongo")
+  .connect(process.env.DB_URL)
   .then((db) =>
     console.log(chalk.bgGreen.black.bold("Database successfully connected"))
   )
@@ -27,7 +31,8 @@ app.use(
 
 // Settings
 
-app.set("port", process.env.PORT | 3000);
+app.set("port", process.env.PORT || 3000);
+app.set("host", process.env.HOST || "0.0.0.0");
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 app.engine("html", require("hbs").__express);
@@ -42,10 +47,10 @@ const indexRoutes = require("./routes/index");
 app.use("/", indexRoutes);
 
 // Starting Server
-app.listen(app.get("port"), () => {
+app.listen(app.get("port"), app.get("host"), () => {
   console.log(
     chalk.blue.underline(
-      `Server running in: http://localhost:${app.get("port")}`
+      `Server running in: http://${app.get("host")}:${app.get("port")}`
     )
   );
 });
